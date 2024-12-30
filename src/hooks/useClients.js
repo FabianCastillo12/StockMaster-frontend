@@ -46,7 +46,7 @@ export function useClientes() {
         },
         body: JSON.stringify(clienteData),
       });
-
+      console.log("Cliente actualizado:", updatedCliente);
       if (res.ok) {
         await fetchClientes();
         await Swal.fire({
@@ -118,7 +118,7 @@ export function useClientes() {
             position: "center",
             icon: "error",
             title: "Error al eliminar el cliente",
-            text: errorData.message,
+            text: "El cliente no pudo ser eliminado, tiene un pedido asociado.",
           });
         }
       } catch (error) {
@@ -170,6 +170,7 @@ export function useClientes() {
     isAddModalOpen,
     openEditModal: (cliente) => {
       setSelectedCliente(cliente);
+      console.log("cliente", cliente);
       setIsEditModalOpen(true);
     },
     closeEditModal: () => {

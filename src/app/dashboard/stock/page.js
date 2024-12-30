@@ -3,6 +3,7 @@ import React from "react";
 import StockList from "@/app/dashboard/stock/components/stockList";
 import UpdateStockModal from "@/app/dashboard/stock/components/updateStock";
 import { useStock } from "@/hooks/useStock";
+import { useReports } from "@/hooks/useReports";
 import Paginacion from "../products/components/Paginacion";
 import { productStores } from "@/stores/productoStores";
 
@@ -15,11 +16,12 @@ export default function StockPage() {
     closeUpdateModal,
     handleUpdateStock,
   } = useStock();
-  const {productPage}=productStores()
+  const { generarExcelStock } = useReports();
+  const { productPage } = productStores();
 
   return (
-    <div className="stock-container p-6 bg-white rounded-md shadow-md">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-6">Stock</h1>
+    <div className="">
+      <h1 className="text-3xl font-semibold text-white mb-6">Stock</h1>
       <StockList stock={productPage} onEdit={openUpdateModal} />
       {isUpdateModalOpen && currentProduct && (
         <UpdateStockModal
@@ -29,7 +31,15 @@ export default function StockPage() {
           onUpdateStock={handleUpdateStock}
         />
       )}
-      <Paginacion products={stock}/>
+      <div className="flex justify-center items-center">
+        <button
+          onClick={generarExcelStock}
+          className="bg-[#006400] text-white text-xs px-2 py-2 rounded-md whitespace-nowrap mt-2"
+        >
+          Exportar en Excel
+        </button>
+        <Paginacion products={stock} />
+      </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import ProductAddModal from "@/app/dashboard/products/components/addProduct";
 import { useProducts } from "@/hooks/useProducts";
 import Paginacion from "./components/Paginacion";
 import { productStores } from "@/stores/productoStores";
+import { useReports } from "@/hooks/useReports";
 
 export default function ProductsPage() {
   const {
@@ -19,11 +20,12 @@ export default function ProductsPage() {
     handleDeleteProduct,
     categoria,
   } = useProducts();
- const {productPage}=productStores()
+  const { productPage } = productStores();
+  const { generarExcelStock } = useReports();
 
   return (
     <>
-      <div className="stock-container p-6 bg-white rounded-md shadow-md">
+      <div className="">
         <button
           onClick={() => {
             setEditingProduct(null);
@@ -33,7 +35,7 @@ export default function ProductsPage() {
         >
           <IoAdd size={40} color="white" />
         </button>
-        <h1 className="text-3xl font-semibold text-gray-800 mb-6">Productos</h1>
+        <h1 className="text-3xl font-semibold text-white mb-6">Productos</h1>
         <ProductTable
           products={productPage}
           onEditProduct={(product) => {
@@ -45,13 +47,22 @@ export default function ProductsPage() {
           onUpdateProduct={handleUpdateProduct}
         />
         <ProductAddModal
+          productos={products}
           isOpen={isAddModalOpen}
           onClose={() => setIsAddModalOpen(false)}
           onAddProduct={handleAddProduct}
           onDeleteProduct={handleDeleteProduct}
           product={editingProduct}
         />
-        <Paginacion  products={products}/>
+        <div className="flex justify-center items-center">
+          <button
+            onClick={generarExcelStock}
+            className="bg-[#006400] text-white text-xs px-2 py-2 rounded-md whitespace-nowrap mt-2" 
+          >
+            Exportar en Excel
+          </button>
+          <Paginacion products={products} />
+        </div>
       </div>
     </>
   );
