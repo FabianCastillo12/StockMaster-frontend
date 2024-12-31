@@ -1,19 +1,26 @@
 import React from "react";
 import { IoTrendingUp } from "react-icons/io5";
 
-export default function ItemsHome({ venta }) {
-  const { fecha_pedido, total, detallePedidos, estado, id } = venta;
-  const detalleCount = detallePedidos.length;
-  const fechaFormateada = new Date(fecha_pedido).toLocaleDateString('es-ES', {
-    weekday: 'long', 
-    day: 'numeric',  
-    month: 'short',    
+const formatFecha = (fecha) => {
+  return new Date(fecha).toLocaleDateString('es-ES', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'short',
   });
-  
-  const horaFormateada = new Date(fecha_pedido).toLocaleTimeString([], {
+};
+
+const formatHora = (fecha) => {
+  return new Date(fecha).toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit',
   });
+};
+
+export default function ItemsHome({ venta }) {
+  const { fecha_pedido, total, detallePedidos, estado, id } = venta;
+  const detalleCount = detallePedidos.length;
+  const fechaFormateada = formatFecha(fecha_pedido);
+  const horaFormateada = formatHora(fecha_pedido);
 
   return (
     <div className="bg-[#171821] p-4 w-full rounded-md shadow-sm md:max-w-[150px] lg:min-w-[200px] lg:max-w-[230px]">

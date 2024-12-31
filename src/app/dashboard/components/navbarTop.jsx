@@ -29,13 +29,13 @@ export default function NavbarTop() {
   if (status === "loading") {
     return <p>Cargando...</p>;
   }
- const nombre=(nombreCompleto)=>{
+ const nombre = (nombreCompleto) => {
   const partes = nombreCompleto.split(" ");
-    const nombre = partes[0].charAt(0).toUpperCase() + partes[0].slice(1); // Capitaliza el nombre
-    const inicialApellido = partes[1].charAt(0).toUpperCase(); // Inicial de "tokio"
+  const nombre = partes[0].charAt(0).toUpperCase() + partes[0].slice(1); // Capitaliza el nombre
+  const inicialApellido = partes[1] ? partes[1].charAt(0).toUpperCase() : ""; // Inicial de apellido si existe
 
-    return `${nombre} ${inicialApellido}`; // Combina el nombre y la inicial
- }
+  return `${nombre} ${inicialApellido}`.trim(); // Combina el nombre y la inicial, y elimina espacios extra
+}
   const navbarStyle = {
     transform: abrirNavbar ? "translateX(0)" : "translateX(-100%)",
     transition: "transform 0.3s ease-in-out",
