@@ -25,7 +25,6 @@ export default function NavbarTop() {
     };
   }, []);
 
-  // Evita que el componente retorne condicionalmente diferente cantidad de hooks
   if (status === "loading") {
     return <p>Cargando...</p>;
   }

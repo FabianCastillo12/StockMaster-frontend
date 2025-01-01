@@ -10,14 +10,11 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-
   return (
     <html lang="en">
-      <body className=" bg-[#171821]">
-       <SessionAuthProvider>
-       {children}
-       </SessionAuthProvider>
-        </body>
+      <body className="">
+        <SessionAuthProvider>{children}</SessionAuthProvider>
+      </body>
     </html>
   );
 }
