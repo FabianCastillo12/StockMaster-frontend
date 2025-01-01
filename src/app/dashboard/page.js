@@ -22,7 +22,7 @@ export default function createPost() {
   }, []);
   return (
     <>
-      <div className=" justify-center flex  items-center  flex-1 h-[600px]">
+      <div className=" justify-center flex items-center flex-1 h-[600px]">
         <HashLoader
           color={"red"}
           loading={true}

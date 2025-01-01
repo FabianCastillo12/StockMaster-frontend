@@ -89,99 +89,117 @@ export default function UpdateUserModal({ user, isOpen, onClose, onUpdateUser })
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-      <div className="bg-[#2A2C39] p-6 rounded-lg shadow-lg max-w-sm w-full">
-        <h2 className="text-xl font-semibold text-white mb-4">Editar Usuario</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="nombre" className="block text-gray-300 text-sm font-medium mb-1">
-              Nombre
-            </label>
-            <input
-              type="text"
-              name="nombre"
-              id="nombre"
-              value={formData.nombre}
-              onChange={handleChange}
-              className="w-full border border-gray-600 rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            />
-            {errors.nombre && <p className="text-red-500 text-sm mt-1">{errors.nombre}</p>}
-            {successMessages.nombre && <p className="text-green-500 text-sm mt-1">{successMessages.nombre}</p>}
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-200 bg-opacity-60 text-black z-50 -mt-10">
+      <div className="bg-white p-6 rounded-2xl shadow-xl max-w-3xl w-full max-h-[90vh] overflow-auto">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+          Editar Usuario
+        </h2>
+  
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Columna 1 */}
+          <div className="space-y-4">
+            {/* Nombre */}
+            <div className="mb-3">
+              <label htmlFor="nombre" className="block text-sm font-medium text-gray-600 mb-2">
+                Nombre
+              </label>
+              <input
+                type="text"
+                name="nombre"
+                id="nombre"
+                value={formData.nombre}
+                onChange={handleChange}
+                className="w-full p-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800 shadow-sm"
+                required
+              />
+              {errors.nombre && <p className="text-red-500 text-sm mt-2">{errors.nombre}</p>}
+            </div>
+  
+            {/* Email */}
+            <div className="mb-3">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800 shadow-sm"
+                required
+              />
+              {errors.email && <p className="text-red-500 text-sm mt-2">{errors.email}</p>}
+            </div>
+  
+            {/* Rol */}
+            <div className="mb-3">
+              <label htmlFor="role" className="block text-sm font-medium text-gray-600 mb-2">
+                Rol
+              </label>
+              <select
+                name="role"
+                id="role"
+                value={formData.role}
+                onChange={handleChange}
+                className="w-full p-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800 shadow-sm"
+                required
+              >
+                <option value="admin">Administrador</option>
+                <option value="user">Usuario</option>
+              </select>
+            </div>
           </div>
-          <div>
-            <label htmlFor="email" className="block text-gray-300 text-sm font-medium mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full border border-gray-600 rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-            {successMessages.email && <p className="text-green-500 text-sm mt-1">{successMessages.email}</p>}
+  
+          {/* Columna 2 */}
+          <div className="space-y-4">
+            {/* Contraseña */}
+            <div className="mb-3">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-600 mb-2">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full p-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800 shadow-sm"
+              />
+              {errors.password && <p className="text-red-500 text-sm mt-2">{errors.password}</p>}
+              {successMessages.password && <p className="text-green-500 text-sm mt-2">{successMessages.password}</p>}
+            </div>
+  
+            {/* Confirmar Contraseña */}
+            <div className="mb-3">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-600 mb-2">
+                Confirmar Contraseña
+              </label>
+              <input
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
+                className="w-full p-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800 shadow-sm"
+              />
+              {errors.confirmPassword && <p className="text-red-500 text-sm mt-2">{errors.confirmPassword}</p>}
+              {successMessages.confirmPassword && <p className="text-green-500 text-sm mt-2">{successMessages.confirmPassword}</p>}
+            </div>
           </div>
-          <div>
-            <label htmlFor="password" className="block text-gray-300 text-sm font-medium mb-1">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full border border-gray-600 rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
-            {successMessages.password && <p className="text-green-500 text-sm mt-1">{successMessages.password}</p>}
-          </div>
-          <div>
-            <label htmlFor="confirmPassword" className="block text-gray-300 text-sm font-medium mb-1">
-              Confirmar Contraseña
-            </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={handleConfirmPasswordChange}
-              className="w-full border border-gray-600 rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-            {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
-            {successMessages.confirmPassword && <p className="text-green-500 text-sm mt-1">{successMessages.confirmPassword}</p>}
-          </div>
-          <div>
-            <label htmlFor="role" className="block text-gray-300 text-sm font-medium mb-1">
-              Rol
-            </label>
-            <select
-              name="role"
-              id="role"
-              value={formData.role}
-              onChange={handleChange}
-              className="w-full border border-gray-600 rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            >
-              <option value="admin">Administrador</option>
-              <option value="user">Usuario</option>
-            </select>
-          </div>
-          <div className="flex justify-end space-x-3 mt-6">
+  
+          {/* Botones de acción */}
+          <div className="col-span-2 flex justify-between mt-6">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gradient-to-r from-gray-600 to-gray-800 text-white rounded-md hover:from-gray-700 hover:to-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-colors duration-200"
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-xl shadow-md"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-md hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-200"
+              className="bg-gradient-to-r from-indigo-500 to-indigo-700 text-white py-2 px-4 rounded-xl shadow-md hover:from-indigo-600 hover:to-indigo-800"
             >
               Guardar
             </button>
@@ -190,4 +208,8 @@ export default function UpdateUserModal({ user, isOpen, onClose, onUpdateUser })
       </div>
     </div>
   );
+  
+  
+  
+  
 }

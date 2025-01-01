@@ -4,6 +4,8 @@ import { IoPersonAddOutline } from "react-icons/io5";
 import UpdateUserModal from "@/app/dashboard/user/components/updateUser";
 import AddUserModal from "@/app/dashboard/user/components/addUser";
 import { useUsers } from "@/hooks/useUsers";
+import { UserStats } from "@/app/dashboard/user/components/UsersStats";
+import { UserCharts } from "@/app/dashboard/user/components/UserCharts";
 
 export default function UserPage() {
   const {
@@ -24,17 +26,41 @@ export default function UserPage() {
     return null;
   }
 
+  const stats = {
+    totalUsers: users.length,
+    activeUsers: users.filter((u) => u.active).length,
+    inactiveUsers: users.filter((u) => !u.active).length,
+    adminUsers: users.filter((u) => u.role === "admin").length,
+  };
+
+  const roleDistribution = [
+    { name: "Administradores", value: stats.adminUsers },
+    { name: "Usuarios", value: stats.totalUsers - stats.adminUsers },
+  ];
+
   return (
-    <>
-      <div className="">
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="fixed bottom-10 right-10 bg-black shadow-lg rounded-full w-16 h-16 flex justify-center items-center"
-        >
-          <IoPersonAddOutline size={30} color="white" />
-        </button>
-        <h1 className="text-3xl font-semibold text-white mb-6">Usuarios</h1>
-        {users.length > 0 && (
+    <div className="p-8 bg-gray-50 min-h-screen">
+      {/* Header */}
+      <header className="">
+        <h1 className="text-4xl font-bold text-gray-800">Usuarios</h1>
+      </header>
+
+      {/* Stats and Chart Row */}
+      <section className="flex flex-col lg:flex-row gap-8 mt-8">
+        {/* Left Column: Stats */}
+        <div className="flex-1 bg-white rounded-lg p-6 shadow-md min-h-[250px]">
+          <h2 className="text-xl font-semibold text-gray-700 mb-4">Estadísticas</h2>
+          <UserStats {...stats} />
+        </div>
+
+        {/* Right Column: Chart */}
+        <UserCharts roleDistribution={roleDistribution} />
+      </section>
+
+      {/* Table Section */}
+      <section className="bg-white rounded-lg p-6 shadow-md">
+        <h2 className="text-xl font-semibold text-gray-700 mb-4">Lista de Usuarios</h2>
+        {users.length > 0 ? (
           <UserComponent
             users={users}
             onEditUser={(user) => {
@@ -43,21 +69,33 @@ export default function UserPage() {
             }}
             onDeleteUser={handleDeleteUser}
           />
+        ) : (
+          <p className="text-gray-500 text-center">No hay usuarios registrados.</p>
         )}
-        <AddUserModal
-          isOpen={isAddModalOpen}
-          onClose={() => setIsAddModalOpen(false)}
-          onAddUser={handleAddUser}
+      </section>
+
+      {/* Modals */}
+      <AddUserModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onAddUser={handleAddUser}
+      />
+      {isEditModalOpen && selectedUser && (
+        <UpdateUserModal
+          user={selectedUser}
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          onUpdateUser={handleUpdateUser}
         />
-        {isEditModalOpen && selectedUser && (
-          <UpdateUserModal
-            user={selectedUser}
-            isOpen={isEditModalOpen}
-            onClose={() => setIsEditModalOpen(false)}
-            onUpdateUser={handleUpdateUser}
-          />
-        )}
-      </div>
-    </>
+      )}
+
+      {/* Floating Add Button */}
+      <button
+        onClick={() => setIsAddModalOpen(true)}
+        className="fixed bottom-10 right-10 bg-gray-700 hover:bg-gray-800 text-white shadow-lg rounded-full w-16 h-16 flex justify-center items-center"
+      >
+        <IoPersonAddOutline size={30} />
+      </button>
+    </div>
   );
 }
