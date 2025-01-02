@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useStore } from "@/stores/autenticacion";
 import { useSession } from "next-auth/react";
 
-const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product }) => {
+const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, categorias }) => {
   const { data: session, status } = useSession();
   const [formData, setFormData] = useState({
     nombre: "",
@@ -16,27 +16,9 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product }) 
     valor: "",
     tipo: "ml"
   });
-  const [categorias, setCategorias] = useState([]);
   const [errors, setErrors] = useState({});
   const user = useStore((state) => state.user);
 
-  useEffect(() => {
-    const traerCategorias = async () => {
-      try {
-        const res = await fetch("http://localhost:3010/categoria", {
-          headers: {
-            Authorization: `Bearer ${session.user.token}`,
-          },
-        });
-        const data = await res.json();
-        setCategorias(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    traerCategorias();
-  }, [user.token]);
 
   useEffect(() => {
     if (product) {
