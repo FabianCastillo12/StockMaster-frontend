@@ -7,7 +7,7 @@ export function calculateStockLevels(items) {
   };
   console.log("items", items);
   items.forEach(item => {
-    const percentage = (item.cantidadStock / 200) * 100;
+    const percentage = (item.cantidadStock / 500) * 100;
     if (percentage <= 25) levels.low++;
     else if (percentage <= 75) levels.medium++;
     else levels.high++;

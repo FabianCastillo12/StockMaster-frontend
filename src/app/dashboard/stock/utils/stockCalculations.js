@@ -1,5 +1,5 @@
 export function calculateStockLevel(item) {
-  const percentage = (item.cantidadStock / 200) * 100;
+  const percentage = (item.cantidadStock / 500) * 100;
   if (percentage <= 25) {
     return { level: 'low', color: 'red', percentage };
   } else if (percentage <= 75) {
@@ -10,9 +10,9 @@ export function calculateStockLevel(item) {
 
 export function getStockStats(items) {
   return {
-    total: items.length,
-    lowStock: items.filter(item => calculateStockLevel(item).level === 'low').length,
-    active: items.filter(item => item.status === 'active').length,
-    inactive: items.filter(item => item.status === 'inactive').length,
+    total: items.length, // Total de productos
+    lowStock: items.filter(item => calculateStockLevel(item).level === 'low').length, // Productos con stock bajo
+    active: items.filter(item => item.status === 'active').length, // Productos activos
+    inactive: items.filter(item => item.status === 'inactive').length, // Productos inactivos
   };
 }

@@ -15,7 +15,7 @@ export function UserCharts({ roleDistribution }) {
             index="name"
             categories={["value"]}
             colors={["chart-1", "chart-2"]}
-            valueFormatter={(value) => `${value} usuarios`}
+            valueFormatter={(value) => `${value}`}
           />
         </CardContent>
       </Card>

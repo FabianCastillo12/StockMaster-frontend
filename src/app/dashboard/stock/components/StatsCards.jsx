@@ -11,11 +11,11 @@ export function StatsCards({ totalProducts, lowStockProducts, mediumStockProduct
       bgColor: 'bg-blue-100',
     },
     {
-      title: 'Stock Bajo',
-      value: lowStockProducts,
-      icon: XCircle,
-      color: 'text-red-600',
-      bgColor: 'bg-red-100',
+      title: 'Stock Alto',
+      value: highStockProducts,
+      icon: CheckCircle,
+      color: 'text-green-600',
+      bgColor: 'bg-green-100',
     },
     {
       title: 'Stock Medio',
@@ -25,16 +25,16 @@ export function StatsCards({ totalProducts, lowStockProducts, mediumStockProduct
       bgColor: 'bg-yellow-100',
     },
     {
-      title: 'Stock Alto',
-      value: highStockProducts,
-      icon: CheckCircle,
-      color: 'text-green-600',
-      bgColor: 'bg-green-100',
+      title: 'Stock Bajo',
+      value: lowStockProducts,
+      icon: XCircle,
+      color: 'text-red-600',
+      bgColor: 'bg-red-100',
     },
   ];
 
   return (
-    <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-6 mb-6">
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 mb-6">
       {stats.map((stat) => {
         const Icon = stat.icon;
         return (

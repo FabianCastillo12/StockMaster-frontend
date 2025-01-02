@@ -3,44 +3,31 @@ import StockList from "@/app/dashboard/stock/components/stockList";
 import UpdateStockModal from "@/app/dashboard/stock/components/updateStock";
 import { useStock } from "@/hooks/useStock";
 import { useReports } from "@/hooks/useReports";
-import Paginacion from "../products/components/Paginacion";
-import { productStores } from "@/stores/productoStores";
 import { Header } from "./components/Header";
 import { useState, useMemo, useEffect } from "react";
 import { useProducts } from "@/hooks/useProducts";
 import { StatsCards } from "./components/StatsCards";
 import { StockCharts } from "./components/StockCharts";
+import { StockTable } from "./components/StockTable";
 import { calculateStockLevel } from './utils/stockCalculations.js';
 import { calculateStockLevels, calculateCategoryData } from './utils/chartCalculations.js';
 
 export default function StockPage() {
   const {
-    stock,
-    isUpdateModalOpen,
-    currentProduct,
-    openUpdateModal,
-    closeUpdateModal,
-    handleUpdateStock,
+    stock, // Lista de productos en stock
+    isUpdateModalOpen, // Estado del modal de actualización
+    currentProduct, // Producto actual seleccionado para actualizar
+    openUpdateModal, // Función para abrir el modal de actualización
+    closeUpdateModal, // Función para cerrar el modal de actualización
+    handleUpdateStock, // Función para manejar la actualización del stock
   } = useStock();
-  console.log("stock", stock);
-  const { categoria } = useProducts();
-  const { generarExcelStock } = useReports();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('');
-  const [stockLevelFilter, setStockLevelFilter] = useState('');
-  const [stockLevels, setStockLevels] = useState({});
-  const [categoryData, setCategoryData] = useState({});
-
-  useEffect(() => {
-    setStockLevels(calculateStockLevels(stock));
-    setCategoryData(calculateCategoryData(stock));
-    console.log("stockLevels", stockLevels);
-    console.log("categoryData", categoryData);
-  }, [stock]);
-
-  const categories = useMemo(() => {
-    return Array.from(new Set(categoria.map(item => item.nombre)));
-  }, [categoria]);
+  const { categoria } = useProducts(); // Lista de categorías de productos
+  const { generarExcelStock } = useReports(); // Función para generar un reporte en Excel
+  const [searchQuery, setSearchQuery] = useState(''); // Consulta de búsqueda
+  const [categoryFilter, setCategoryFilter] = useState(''); // Filtro de categoría
+  const [stockLevelFilter, setStockLevelFilter] = useState(''); // Filtro de nivel de stock
+  const [stockLevels, setStockLevels] = useState({}); // Niveles de stock calculados
+  const [categoryData, setCategoryData] = useState({}); // Datos de categorías calculados
 
   const filteredItems = useMemo(() => {
     return stock.filter(item => {
@@ -52,7 +39,7 @@ export default function StockPage() {
       const matchesCategory = categoryFilter === '' || 
         (item.categoria && item.categoria.nombre === categoryFilter);
 
-      const stockLevel = item.stockLevel;
+      const stockLevel = calculateStockLevel(item).level;
       const matchesStockLevel = stockLevelFilter === '' || 
         stockLevel === stockLevelFilter;
 
@@ -60,17 +47,24 @@ export default function StockPage() {
     });
   }, [stock, searchQuery, categoryFilter, stockLevelFilter]);
 
+  useEffect(() => {
+    setStockLevels(calculateStockLevels(filteredItems));
+    setCategoryData(calculateCategoryData(filteredItems));
+  }, [filteredItems]);
+
+  const categories = useMemo(() => {
+    return Array.from(new Set(categoria.map(item => item.nombre)));
+  }, [categoria]);
+
   const stats = {
-    totalProducts: stock.length,
-    lowStockProducts: stock.filter(item => calculateStockLevel(item).level === 'low').length,
-    mediumStockProducts: stock.filter(item => calculateStockLevel(item).level === 'medium').length,
-    highStockProducts: stock.filter(item => calculateStockLevel(item).level === 'high').length,
+    totalProducts: filteredItems.length, // Total de productos
+    lowStockProducts: filteredItems.filter(item => calculateStockLevel(item).level === 'low').length, // Productos con stock bajo
+    mediumStockProducts: filteredItems.filter(item => calculateStockLevel(item).level === 'medium').length, // Productos con stock medio
+    highStockProducts: filteredItems.filter(item => calculateStockLevel(item).level === 'high').length, // Productos con stock alto
   };
 
-  console.log("stats", stats);
-
   return (
-    <div className="">
+    <>
       <Header
           onAddProduct={() => console.log('Add product')}
           onAddStock={() => setIsAddStockModalOpen(true)}
@@ -78,10 +72,11 @@ export default function StockPage() {
           onCategoryFilter={setCategoryFilter}
           onStockLevelFilter={setStockLevelFilter}
           categories={categories}
+          onExport={generarExcelStock}
         />
       <StatsCards {...stats} />
-      <StockCharts items={stock} stockLevels={stockLevels} categoryData={categoryData} />
-      <StockList stock={filteredItems} onEdit={openUpdateModal} />
+      <StockCharts items={filteredItems} stockLevels={stockLevels} categoryData={categoryData} />
+      <StockTable items={filteredItems} onEdit={openUpdateModal}/>
       {isUpdateModalOpen && currentProduct && (
         <UpdateStockModal
           isOpen={isUpdateModalOpen}
@@ -90,14 +85,6 @@ export default function StockPage() {
           onUpdateStock={handleUpdateStock}
         />
       )}
-      <div className="flex justify-center items-center">
-        <button
-          onClick={generarExcelStock}
-          className="bg-[#006400] text-white text-xs px-2 py-2 rounded-md whitespace-nowrap mt-2"
-        >
-          Exportar en Excel
-        </button>
-      </div>
-    </div>
+    </>
   );
 }

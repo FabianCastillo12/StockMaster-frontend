@@ -84,7 +84,7 @@ const ProductTable = ({
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <span
-                  className={`px-2 py-1 inline-flex text-xs font-semibold rounded-full ${
+                  className={`px-2 py-1 inline-flex text-sm font-semibold rounded-full ${
                     product.estado === "activo"
                       ? "bg-green-500 text-white"
                       : "bg-red-500 text-white"
