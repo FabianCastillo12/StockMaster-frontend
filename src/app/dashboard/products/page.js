@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { useState, useEffect } from "react";
 import ProductTable from "@/app/dashboard/products/components/productsTable";
 import { IoAdd } from "react-icons/io5";
 import ProductAddModal from "@/app/dashboard/products/components/addProduct";
@@ -7,6 +7,9 @@ import { useProducts } from "@/hooks/useProducts";
 import Paginacion from "./components/Paginacion";
 import { productStores } from "@/stores/productoStores";
 import { useReports } from "@/hooks/useReports";
+import { Header } from "./components/Header";
+import { StatsCards } from "./components/StatsCards";
+import { ProductTable2 } from "./components/ProductTable";
 
 export default function ProductsPage() {
   const {
@@ -22,10 +25,46 @@ export default function ProductsPage() {
   } = useProducts();
   const { productPage } = productStores();
   const { generarExcelStock } = useReports();
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
+  useEffect(() => {
+    setFilteredProducts(products);
+  }, [products]);
+
+  const handleSearch = (query) => {
+    const filtered = products.filter((product) =>
+      Object.values(product).some((value) =>
+        value.toString().toLowerCase().includes(query.toLowerCase())
+      )
+    );
+    setFilteredProducts(filtered);
+  };
+
+  const stats = {
+    totalProducts: products.length,
+    activeProducts: products.filter((p) => p.estado == "activo").length,
+    inactiveProducts: products.filter((p) => p.estado == "inactivo").length,
+    categories: new Set(products.map((p) => p.categoria.id)).size,
+  };
+  console.log("stats", stats);
+
+  console.log(products);
   return (
     <>
       <div className="">
+        <Header onAddProduct={generarExcelStock} onSearch={handleSearch} />
+        <StatsCards {...stats} />
+        <div>
+          <ProductTable
+            products={filteredProducts}
+            categoria={categoria}
+            onDeleteProduct={handleDeleteProduct}
+            onUpdateProduct={handleUpdateProduct}
+          />
+          <div className="flex justify-center items-center">
+            {/*<Paginacion products={products} />*/}
+          </div>
+        </div>
         <button
           onClick={() => {
             setEditingProduct(null);
@@ -35,17 +74,6 @@ export default function ProductsPage() {
         >
           <IoAdd size={40} color="white" />
         </button>
-        <h1 className="text-3xl font-semibold text-white mb-6">Productos</h1>
-        <ProductTable
-          products={productPage}
-          onEditProduct={(product) => {
-            setEditingProduct(product);
-            setIsAddModalOpen(true);
-          }}
-          categoria={categoria}
-          onDeleteProduct={handleDeleteProduct}
-          onUpdateProduct={handleUpdateProduct}
-        />
         <ProductAddModal
           productos={products}
           isOpen={isAddModalOpen}
@@ -53,16 +81,8 @@ export default function ProductsPage() {
           onAddProduct={handleAddProduct}
           onDeleteProduct={handleDeleteProduct}
           product={editingProduct}
+          categorias={categoria}
         />
-        <div className="flex justify-center items-center">
-          <button
-            onClick={generarExcelStock}
-            className="bg-[#006400] text-white text-xs px-2 py-2 rounded-md whitespace-nowrap mt-2" 
-          >
-            Exportar en Excel
-          </button>
-          <Paginacion products={products} />
-        </div>
       </div>
     </>
   );

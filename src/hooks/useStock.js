@@ -28,6 +28,7 @@ export function useStock() {
       }
 
       const data = await res.json();
+      console.log("data", data);
       setStock(data.sort((a, b) => a.id - b.id));
     } catch (error) {
       console.error("Error fetching stock:", error);
