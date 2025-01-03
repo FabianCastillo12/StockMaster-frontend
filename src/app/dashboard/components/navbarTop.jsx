@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IoMenu, IoNotifications, IoPerson, IoLogIn } from "react-icons/io5"; // IoSettings no se utiliza
 import Navbar from "./navbar";
+import { EllipsisVertical, User, UserPlus } from "lucide-react";
 import { useSession, signOut } from "next-auth/react"; // Importar NextAuth
 
 export default function NavbarTop() {
@@ -25,10 +26,9 @@ export default function NavbarTop() {
     };
   }, []);
 
-  if (status === "loading") {
-    return <p>Cargando...</p>;
-  }
+
  const nombre = (nombreCompleto) => {
+  if (!nombreCompleto) return ""; // Verifica si nombreCompleto es undefined o null
   const partes = nombreCompleto.split(" ");
   const nombre = partes[0].charAt(0).toUpperCase() + partes[0].slice(1); // Capitaliza el nombre
   const inicialApellido = partes[1] ? partes[1].charAt(0).toUpperCase() : ""; // Inicial de apellido si existe
@@ -47,7 +47,7 @@ export default function NavbarTop() {
           className="col-span-2 cursor-pointer lg:hidden"
           onClick={() => setAbrirNavbar(true)}
         >
-          <IoMenu color="white" size={25} />
+          <EllipsisVertical color="white" size={25} />
         </div>
 
         <div className="p-2 bg-[#171821] col-span-7 rounded-lg md:rounded-md m-1 flex md:col-span-6 lg:col-span-8 gap-1 items-center"></div>
@@ -57,7 +57,7 @@ export default function NavbarTop() {
          
           <div className="relative flex items-center gap-3">
           <p className="text-white font-bold text-lg">{nombre(session?.user?.user) }.</p>
-            <IoPerson
+            <User
               size={25}
               color="white"
               className="cursor-pointer"

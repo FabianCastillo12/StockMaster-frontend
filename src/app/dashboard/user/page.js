@@ -1,6 +1,6 @@
 "use client";
 import UserComponent from "@/app/dashboard/user/components/userComponent";
-import { IoPersonAddOutline } from "react-icons/io5";
+import { UserPlus } from "lucide-react";
 import UpdateUserModal from "@/app/dashboard/user/components/updateUser";
 import AddUserModal from "@/app/dashboard/user/components/addUser";
 import { useUsers } from "@/hooks/useUsers";
@@ -28,8 +28,8 @@ export default function UserPage() {
   console.log("users from a",users);
   const stats = {
     totalUsers: users.length,
-    activeUsers: users.filter((u) => u.active).length,
-    inactiveUsers: users.filter((u) => !u.active).length,
+    activeUsers: users.filter((u) => u.estado = "activo").length,
+    inactiveUsers: users.filter((u) => u.estado == "inactivo").length,
     adminUsers: users.filter((u) => u.role === "admin").length,
   };
 
@@ -94,7 +94,7 @@ export default function UserPage() {
         onClick={() => setIsAddModalOpen(true)}
         className="fixed bottom-10 right-10 bg-gray-700 hover:bg-gray-800 text-white shadow-lg rounded-full w-16 h-16 flex justify-center items-center"
       >
-        <IoPersonAddOutline size={30} />
+        <UserPlus size={30} />
       </button>
     </div>
   );

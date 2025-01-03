@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useProducts } from "@/hooks/useProducts";
 import { useClientes } from "@/hooks/useClients";
 import { useFormats } from "@/hooks/useFormats";
 import { useSession } from "next-auth/react";
@@ -29,16 +28,12 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
     total: 0,
   });
 
-
-  // Primero, asegúrate de que este componente esté definido en alguna parte de tu archivo
-
-
   function TruncateWithTooltip({ text, maxLength = 20 }) {
     const truncatedText = text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
 
     return (
       <div className="relative group">
-        <div className="text-sm text-gray-300 truncate">
+        <div className="text-sm text-gray-700 truncate">
           {truncatedText}
         </div>
         {text.length > maxLength && (
@@ -252,7 +247,7 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 overflow-y-auto">
-      <div className="bg-[#2A2C39] p-6 rounded-lg shadow-lg w-full max-w-7xl my-8 text-white overflow-y-auto max-h-[calc(80vh-4rem)] scrollbar" style={{ scrollbarWidth: "none" }}>
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-7xl my-8 text-gray-900 overflow-y-auto max-h-[calc(80vh-4rem)] scrollbar" style={{ scrollbarWidth: "none" }}>
         {!isReviewing ? (
           <>
             <div className="flex items-center justify-between mb-4">
@@ -262,23 +257,23 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
                 name="fecha"
                 value={formData.fecha}
                 onChange={handleChange}
-                className="bg-[#171821] border border-gray-600 rounded px-2 py-1 text-white"
+                className="bg-gray-100 border border-gray-300 rounded px-2 py-1 text-gray-900"
               />
             </div>
-            <div className="mb-4 border-b border-[#3D4059] pb-4">
+            <div className="mb-4 border-b border-gray-300 pb-4">
               <h3 className="font-medium mb-2">Buscar Cliente:</h3>
               <div className="flex mb-2 gap-4">
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-[#171821] border border-gray-600 rounded px-2 py-1 w-2/3"
+                  className="bg-gray-100 border border-gray-300 rounded px-2 py-1 w-2/3"
                   placeholder="Buscar"
                 />
                 <select
                   value={searchCriteria}
                   onChange={(e) => setSearchCriteria(e.target.value)}
-                  className="bg-[#171821] border border-gray-600 rounded px-2 py-1 w-1/3"
+                  className="bg-gray-100 border border-gray-300 rounded px-2 py-1 w-1/3"
                 >
                   <option value="nombre">Nombre</option>
                   <option value="dni">DNI</option>
@@ -286,21 +281,21 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
                 </select>
               </div>
               {searchQuery.trim() && filteredClientes.length > 0 && (
-                <div className="mt-2 max-h-48 overflow-y-auto bg-[#171821] rounded" style={{ scrollbarWidth: "none" }}>
-                  <table className="min-w-full divide-y divide-[#3D4059]">
-                    <thead className="bg-[#3D4059]">
+                <div className="mt-2 max-h-48 overflow-y-auto bg-gray-100 rounded" style={{ scrollbarWidth: "none" }}>
+                  <table className="min-w-full divide-y divide-gray-300">
+                    <thead className="bg-gray-200">
                       <tr>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Nombre</th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">DNI</th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">RUC</th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Nombre</th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">DNI</th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">RUC</th>
                       </tr>
                     </thead>
-                    <tbody className="bg-[#2A2C39] divide-y divide-[#3D4059]">
+                    <tbody className="bg-white divide-y divide-gray-300">
                       {filteredClientes.map((cliente) => (
                         <tr
                           key={cliente.id}
                           onClick={() => handleClientSelect(cliente)}
-                          className="cursor-pointer hover:bg-[#343747] transition-colors duration-150 ease-in-out"
+                          className="cursor-pointer hover:bg-gray-200 transition-colors duration-150 ease-in-out"
                         >
                           <td className="px-6 py-4 whitespace-nowrap text-sm">{cliente.nombre}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm">{cliente.dni}</td>
@@ -319,7 +314,7 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleChange}
-                className="bg-[#171821] border border-gray-600 rounded px-2 py-1 w-full mb-2"
+                className="bg-gray-100 border border-gray-300 rounded px-2 py-1 w-full mb-2"
                 placeholder="Nombre del cliente"
                 disabled
               />
@@ -328,7 +323,7 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="bg-[#171821] border border-gray-600 rounded px-2 py-1 w-full mb-2"
+                className="bg-gray-100 border border-gray-300 rounded px-2 py-1 w-full mb-2"
                 placeholder="Email del cliente"
                 disabled
               />
@@ -337,7 +332,7 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
                 name="telefono"
                 value={formData.telefono}
                 onChange={handleChange}
-                className="bg-[#171821] border border-gray-600 rounded px-2 py-1 w-full mb-2"
+                className="bg-gray-100 border border-gray-300 rounded px-2 py-1 w-full mb-2"
                 placeholder="Teléfono del cliente"
                 disabled
               />
@@ -346,36 +341,36 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
                 name="direccion"
                 value={formData.direccion}
                 onChange={handleChange}
-                className="bg-[#171821] border border-gray-600 rounded px-2 py-1 w-full"
+                className="bg-gray-100 border border-gray-300 rounded px-2 py-1 w-full"
                 placeholder="Dirección del cliente"
                 disabled
               />
             </div>
-            <div className="mb-4 border-t border-[#3D4059] pt-4">
+            <div className="mb-4 border-t border-gray-300 pt-4">
               <h3 className="font-medium mb-2">Buscar Producto:</h3>
               <input
                 type="text"
                 value={productSearchQuery}
                 onChange={(e) => setProductSearchQuery(e.target.value)}
-                className="bg-[#171821] border border-gray-600 rounded px-2 py-1 w-full"
+                className="bg-gray-100 border border-gray-300 rounded px-2 py-1 w-full"
                 placeholder="Buscar productos"
               />
               {productSearchQuery.trim() && filteredProducts.length > 0 && (
-                <div className="mt-2 max-h-48 overflow-y-auto bg-[#171821] rounded" style={{ scrollbarWidth: "none" }}>
-                  <table className="min-w-full divide-y divide-[#3D4059]">
-                    <thead className="bg-[#3D4059]">
+                <div className="mt-2 max-h-48 overflow-y-auto bg-gray-100 rounded" style={{ scrollbarWidth: "none" }}>
+                  <table className="min-w-full divide-y divide-gray-300">
+                    <thead className="bg-gray-200">
                       <tr>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Nombre</th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Descripción</th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Precio</th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Acción</th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Nombre</th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Descripción</th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Precio</th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Acción</th>
                       </tr>
                     </thead>
-                    <tbody className="bg-[#2A2C39] divide-y divide-[#3D4059]">
+                    <tbody className="bg-white divide-y divide-gray-300">
                       {filteredProducts.map((product) => (
                         <tr
                           key={product.id}
-                          className="hover:bg-[#343747] transition-colors duration-150 ease-in-out"
+                          className="hover:bg-gray-200 transition-colors duration-150 ease-in-out"
                         >
                           <td className="px-6 py-4 whitespace-nowrap text-sm">{product.nombre}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm">{product.descripcion}</td>
@@ -398,23 +393,23 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
             <div className="mb-4">
               <h3 className="font-medium mb-2">Productos Añadidos:</h3>
 
-              <div className="overflow-x-auto bg-[#2A2C39] rounded-lg shadow-md" style={{ scrollbarWidth: "none" }}>
-                <table className="min-w-full divide-y divide-[#3D4059]">
-                  <thead className="bg-[#3D4059]">
+              <div className="overflow-x-auto bg-white rounded-lg shadow-md" style={{ scrollbarWidth: "none" }}>
+                <table className="min-w-full divide-y divide-gray-300">
+                  <thead className="bg-gray-200">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Nombre</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Descripción</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Cantidad</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Stock</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Precio</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Impuestos</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Subtotal</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Acción</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Nombre</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Descripción</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Cantidad</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Stock</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Precio</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Impuestos</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Subtotal</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Acción</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-[#2A2C39] divide-y divide-[#3D4059]">
+                  <tbody className="bg-white divide-y divide-gray-300">
                     {formData.productos.map((product, index) => (
-                      <tr key={index} className="hover:bg-[#343747] transition-colors duration-150 ease-in-out">
+                      <tr key={index} className="hover:bg-gray-200 transition-colors duration-150 ease-in-out">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <TruncateWithTooltip text={product.nombre} maxLength={20} />
                         </td>
@@ -434,25 +429,25 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
                                 Math.min(parseInt(e.target.value) || 1, product.stock)
                               )
                             }
-                            className="bg-[#171821] border border-gray-600 rounded px-2 py-1 w-20 text-white"
+                            className="bg-gray-100 border border-gray-300 rounded px-2 py-1 w-20 text-gray-900"
                           />
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-300">{product.stock}</div>
+                          <div className="text-sm text-gray-700">{product.stock}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-300">{currencyFormatter.format(product.precio)}</div>
+                          <div className="text-sm text-gray-700">{currencyFormatter.format(product.precio)}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-300">{currencyFormatter.format(product.impuestos * product.cantidad)}</div>
+                          <div className="text-sm text-gray-700">{currencyFormatter.format(product.impuestos * product.cantidad)}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-300">{currencyFormatter.format(product.precio * product.cantidad)}</div>
+                          <div className="text-sm text-gray-700">{currencyFormatter.format(product.precio * product.cantidad)}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <button
                             onClick={() => handleDeleteProductRow(index)}
-                            className="text-red-400 hover:text-red-500 bg-[#2A2C39] hover:bg-[#343747] px-2 py-1 rounded-md transition-colors duration-150 ease-in-out text-sm"
+                            className="text-red-600 hover:text-red-800 bg-white hover:bg-gray-100 px-2 py-1 rounded-md transition-colors duration-150 ease-in-out text-sm"
                           >
                             Eliminar
                           </button>
@@ -465,15 +460,15 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
               <div className="flex justify-end mt-4">
                 <div className="text-right">
                   <div className="mb-1">
-                    <span className="font-medium text-gray-300 mr-2">Base imponible:</span>
+                    <span className="font-medium text-gray-700 mr-2">Base imponible:</span>
                     <span className="font-bold">{currencyFormatter.format(formData.total - formData.total * 0.18)}</span>
                   </div>
                   <div className="mb-1">
-                    <span className="font-medium text-gray-300 mr-2">IGV:</span>
+                    <span className="font-medium text-gray-700 mr-2">IGV:</span>
                     <span className="font-bold">{currencyFormatter.format(formData.total * 0.18)}</span>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-300 mr-2">Total:</span>
+                    <span className="font-medium text-gray-700 mr-2">Total:</span>
                     <span className="text-xl font-bold">{currencyFormatter.format(formData.total)}</span>
                   </div>
                 </div>
@@ -483,13 +478,13 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
             <div className="flex justify-end gap-4 mt-4">
               <button
                 onClick={handleClose}
-                className="bg-gradient-to-r from-gray-500 to-gray-700 hover:from-gray-600 hover:to-gray-800 text-white px-6 py-2 rounded-full transition-colors duration-150 ease-in-out shadow-md"
+                className="bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-150 ease-in-out shadow-md hover:bg-gray-700"
               >
                 Cancelar
               </button>
               <button
                 onClick={() => setIsReviewing(true)}
-                className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white px-6 py-2 rounded-full transition-colors duration-150 ease-in-out shadow-md"
+                className="bg-blue-600 text-white px-6 py-2 rounded-full transition-colors duration-150 ease-in-out shadow-md hover:bg-blue-700"
               >
                 Continuar
               </button>
@@ -499,7 +494,7 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
         ) : (
           <>
             <h2 className="text-2xl font-semibold mb-4">Confirmar Pedido</h2>
-            <div className="mb-4 border-b border-[#3D4059] pb-4">
+            <div className="mb-4 border-b border-gray-300 pb-4">
               <h3 className="font-medium mb-2">Cliente:</h3>
               <p>{formData.nombre}</p>
               <p>{formData.email}</p>
@@ -508,38 +503,38 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
             </div>
             <div className="mb-4">
               <h3 className="font-medium mb-2">Productos Añadidos:</h3>
-              <div className="overflow-x-auto bg-[#2A2C39] rounded-lg shadow-md" style={{ scrollbarWidth: "none" }}>
-                <table className="min-w-full divide-y divide-[#3D4059]">
-                  <thead className="bg-[#3D4059]">
+              <div className="overflow-x-auto bg-white rounded-lg shadow-md" style={{ scrollbarWidth: "none" }}>
+                <table className="min-w-full divide-y divide-gray-300">
+                  <thead className="bg-gray-200">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Nombre</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Descripción</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Cantidad</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Precio</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Impuestos</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Subtotal</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Nombre</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Descripción</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Cantidad</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Precio</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Impuestos</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Subtotal</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-[#2A2C39] divide-y divide-[#3D4059]">
+                  <tbody className="bg-white divide-y divide-gray-300">
                     {formData.productos.map((product, index) => (
-                      <tr key={index} className="hover:bg-[#343747] transition-colors duration-150 ease-in-out">
+                      <tr key={index} className="hover:bg-gray-200 transition-colors duration-150 ease-in-out">
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-white">{product.nombre}</div>
+                          <div className="text-sm font-medium text-gray-900">{product.nombre}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-300">{product.descripcion}</div>
+                          <div className="text-sm text-gray-700">{product.descripcion}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-300">{product.cantidad}</div>
+                          <div className="text-sm text-gray-700">{product.cantidad}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-300">{currencyFormatter.format(product.precio)}</div>
+                          <div className="text-sm text-gray-700">{currencyFormatter.format(product.precio)}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-300">{currencyFormatter.format(product.impuestos * product.cantidad)}</div>
+                          <div className="text-sm text-gray-700">{currencyFormatter.format(product.impuestos * product.cantidad)}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-300">{currencyFormatter.format(product.precio * product.cantidad)}</div>
+                          <div className="text-sm text-gray-700">{currencyFormatter.format(product.precio * product.cantidad)}</div>
                         </td>
                       </tr>
                     ))}
@@ -549,15 +544,15 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
               <div className="flex justify-end mt-4">
                 <div className="text-right">
                   <div className="mb-1">
-                    <span className="font-medium text-gray-300 mr-2">Base imponible:</span>
+                    <span className="font-medium text-gray-700 mr-2">Base imponible:</span>
                     <span className="font-bold">{currencyFormatter.format(formData.total - formData.total * 0.18)}</span>
                   </div>
                   <div className="mb-1">
-                    <span className="font-medium text-gray-300 mr-2">IGV:</span>
+                    <span className="font-medium text-gray-700 mr-2">IGV:</span>
                     <span className="font-bold">{currencyFormatter.format(formData.total * 0.18)}</span>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-300 mr-2">Total:</span>
+                    <span className="font-medium text-gray-700 mr-2">Total:</span>
                     <span className="text-xl font-bold">{currencyFormatter.format(formData.total)}</span>
                   </div>
                 </div>
@@ -567,13 +562,13 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
               
               <button
                 onClick={() => setIsReviewing(false)}
-                className="bg-gradient-to-r from-gray-500 to-gray-700 hover:from-gray-600 hover:to-gray-800 text-white px-6 py-2 rounded-full transition-colors duration-150 ease-in-out shadow-md"
+                className="bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-150 ease-in-out shadow-md hover:bg-gray-700"
               >
                 Volver
               </button>
               <button
                 onClick={handleSubmit}
-                className="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white px-6 py-2 rounded-full transition-colors duration-150 ease-in-out shadow-md"
+                className="bg-green-600 text-white px-6 py-2 rounded-full transition-colors duration-150 ease-in-out shadow-md hover:bg-green-700"
               >
                 Confirmar Pedido
               </button>

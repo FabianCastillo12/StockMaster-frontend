@@ -175,26 +175,26 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
   console.log("cateorias", categorias);
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 text-black z-50">
-      <div className="bg-[#2A2C39] p-6 rounded-lg shadow-lg max-w-sm w-full divide-y divide-[#3D4059]">
-        <h2 className="text-lg font-semibold text-white mb-4">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full divide-y divide-gray-300">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">
           {product ? "Modificar Producto" : "Agregar Producto"}
         </h2>
         <form onSubmit={handleSubmit} className="pt-4">
           <div className="mb-4">
-            <label htmlFor="nombre" className="block text-gray-300 text-sm font-medium mb-2">Nombre</label>
+            <label htmlFor="nombre" className="block text-gray-700 text-sm font-medium mb-2">Nombre</label>
             <input
               type="text"
               name="nombre"
               id="nombre"
               value={formData.nombre}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-400 rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
             {errors.nombre && <p className="text-red-500 text-sm">{errors.nombre}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="precio" className="block text-gray-300 text-sm font-medium mb-2">Precio</label>
+            <label htmlFor="precio" className="block text-gray-700 text-sm font-medium mb-2">Precio</label>
             <input
               type="number"
               step="0.01"
@@ -202,26 +202,26 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
               id="precio"
               value={formData.precio}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-400 rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
             {errors.precio && <p className="text-red-500 text-sm">{errors.precio}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="cantidadStock" className="block text-gray-300 text-sm font-medium mb-2">Cantidad en Stock</label>
+            <label htmlFor="cantidadStock" className="block text-gray-700 text-sm font-medium mb-2">Cantidad en Stock</label>
             <input
               type="number"
               name="cantidadStock"
               id="cantidadStock"
               value={formData.cantidadStock}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-400 rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
             {errors.cantidadStock && <p className="text-red-500 text-sm">{errors.cantidadStock}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="unidad_medida_valor" className="block text-gray-300 text-sm font-medium mb-2">Unidad de Medida</label>
+            <label htmlFor="unidad_medida_valor" className="block text-gray-700 text-sm font-medium mb-2">Unidad de Medida</label>
             <div className="flex">
               <input
                 type="number"
@@ -229,14 +229,14 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
                 id="unidad_medida_valor"
                 value={unidadMedida.valor}
                 onChange={handleChange}
-                className="mt-1 block w-2/3 border border-gray-400 rounded-l-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-2/3 border border-gray-300 rounded-l-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 required
               />
               <select
                 name="unidad_medida_tipo"
                 value={unidadMedida.tipo}
                 onChange={handleChange}
-                className="mt-1 block w-1/3 border border-gray-400 rounded-r-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-1/3 border border-gray-300 rounded-r-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               >
                 <option value="ml" title="Mililitros">ml</option>
                 <option value="L" title="Litros">L</option>
@@ -245,13 +245,13 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
             {errors.unidad_medida && <p className="text-red-500 text-sm">{errors.unidad_medida}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="categoria" className="block text-gray-300 text-sm font-medium mb-2">Categoría</label>
+            <label htmlFor="categoria" className="block text-gray-700 text-sm font-medium mb-2">Categoría</label>
             <select
               name="categoria"
               id="categoria"
               value={formData.categoria}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-400 rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             >
               <option value="">Seleccione una categoría</option>
@@ -267,13 +267,13 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
             <button
               type="button"
               onClick={handleClose}
-              className="bg-gradient-to-r from-gray-600 to-gray-800 text-white py-2 px-6 rounded-full shadow-md hover:from-gray-700 hover:to-gray-900 mr-4"
+              className="bg-gray-600 text-white py-2 px-6 rounded-md shadow-md hover:bg-gray-700 mr-4"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-2 px-6 rounded-full shadow-md hover:from-blue-600 hover:to-blue-800"
+              className="bg-blue-600 text-white py-2 px-6 rounded-md shadow-md hover:bg-blue-700"
             >
               {product ? "Modificar" : "Agregar"}
             </button>
