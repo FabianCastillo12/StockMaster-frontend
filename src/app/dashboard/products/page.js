@@ -1,15 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import ProductTable from "@/app/dashboard/products/components/productsTable";
-import { IoAdd } from "react-icons/io5";
+import { PackagePlus } from "lucide-react";
 import ProductAddModal from "@/app/dashboard/products/components/addProduct";
 import { useProducts } from "@/hooks/useProducts";
-import Paginacion from "./components/Paginacion";
 import { productStores } from "@/stores/productoStores";
 import { useReports } from "@/hooks/useReports";
 import { Header } from "./components/Header";
 import { StatsCards } from "./components/StatsCards";
-import { ProductTable2 } from "./components/ProductTable";
 
 export default function ProductsPage() {
   const {
@@ -70,9 +68,9 @@ export default function ProductsPage() {
             setEditingProduct(null);
             setIsAddModalOpen(true);
           }}
-          className="fixed bottom-10 right-10 bg-black shadow-lg rounded-full w-12 h-12 flex justify-center items-center"
+          className="fixed bottom-10 right-10 bg-black shadow-lg rounded-full w-16 h-16 flex justify-center items-center"
         >
-          <IoAdd size={40} color="white" />
+          <PackagePlus size={30} color="white" />
         </button>
         <ProductAddModal
           productos={products}

@@ -1,11 +1,14 @@
 "use client";
-import React from "react";
-import ClienteComponent from "@/app/dashboard/clientes/components/clienteComponent";
-import { IoAdd } from "react-icons/io5";
-import UpdateClienteModal from "@/app/dashboard/clientes/components/updateCliente";
-import AddClienteModal from "@/app/dashboard/clientes/components/addCliente";
+import { useState } from "react";
+import { SquarePlus } from "lucide-react";
 import { useClientes } from "@/hooks/useClients";
 import { useReports } from "@/hooks/useReports";
+import UpdateClienteModal from "@/app/dashboard/clientes/components/updateCliente";
+import AddClienteModal from "@/app/dashboard/clientes/components/addCliente";
+import CustomerHeader from "@/app/dashboard/clientes/components/CustomerHeader";
+import CustomerStats from "@/app/dashboard/clientes/components/CustomerStats";
+import CustomerCharts from "@/app/dashboard/clientes/components/CustomerCharts";
+import CustomerTable from "@/app/dashboard/clientes/components/CustomerTable";
 
 export default function ClientePage() {
   const {
@@ -22,27 +25,26 @@ export default function ClientePage() {
     handleAddCliente,
   } = useClientes();
   const { generarExcelClientes } = useReports();
+  const [searchQuery, setSearchQuery] = useState('');
+  const filteredCustomers = clientes.filter(customer => 
+    Object.values(customer).some(value => 
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
 
   return (
-    <div className="">
-      <button
-        onClick={openAddModal}
-        className="fixed bottom-10 right-10 bg-black shadow-lg rounded-full w-12 h-12 flex justify-center items-center"
-      >
-        <IoAdd size={40} color="white" />
-      </button>
-      <h1 className="text-3xl font-semibold text-white mb-6">Clientes</h1>
-      <ClienteComponent
-        clientes={clientes}
-        onEditCliente={openEditModal}
-        onDeleteCliente={handleDeleteCliente}
-      />
-      <button
-          onClick={generarExcelClientes}
-          className="bg-[#006400] text-white text-xs px-2 py-2 rounded-md mt-4"
-        >
-          Exportar en Excel
-        </button>
+    <>
+      <CustomerHeader 
+          onSearch={setSearchQuery}
+          onExport={generarExcelClientes}
+        />
+      <CustomerStats customers={clientes} />
+      <CustomerCharts customers={clientes} />
+      <CustomerTable 
+          customers={filteredCustomers}
+          onEditCustomer={openEditModal}
+          onDeleteCustomer={handleDeleteCliente}
+        />
       <AddClienteModal
         isOpen={isAddModalOpen}
         onClose={closeAddModal}
@@ -56,6 +58,12 @@ export default function ClientePage() {
           onUpdateCliente={handleUpdateCliente}
         />
       )}
-    </div>
+      <button
+        onClick={openAddModal}
+        className="fixed bottom-10 right-10 bg-black shadow-lg rounded-full w-16 h-16 flex justify-center items-center"
+      >
+        <SquarePlus size={30} color="white" />
+      </button>
+    </>
   );
 }

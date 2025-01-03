@@ -93,83 +93,83 @@ const AddClienteModal = ({ isOpen, onClose, onAddCliente }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-      <div className="bg-[#2A2C39] p-6 rounded-lg shadow-lg max-w-sm w-full text-white">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-gray-900">
         <h2 className="text-2xl font-semibold mb-6">Agregar Cliente</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="nombre" className="block text-sm font-medium text-gray-300 mb-1">Nombre</label>
+            <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
             <input
               type="text"
               id="nombre"
               name="nombre"
               value={formData.nombre}
               onChange={handleChange}
-              className={`mt-1 block w-full border ${errors.nombre ? 'border-red-500' : 'border-gray-600'} rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`mt-1 block w-full border ${errors.nombre ? 'border-red-500' : 'border-gray-300'} rounded-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500`}
               required
             />
             {errors.nombre && <p className="text-red-500 text-xs mt-1">{errors.nombre}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input
               type="email"
               id="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`mt-1 block w-full border ${errors.email ? 'border-red-500' : 'border-gray-600'} rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`mt-1 block w-full border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500`}
               required
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="telefono" className="block text-sm font-medium text-gray-300 mb-1">Teléfono</label>
+            <label htmlFor="telefono" className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
             <input
               type="text"
               id="telefono"
               name="telefono"
               value={formData.telefono}
               onChange={handleChange}
-              className={`mt-1 block w-full border ${errors.telefono ? 'border-red-500' : 'border-gray-600'} rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`mt-1 block w-full border ${errors.telefono ? 'border-red-500' : 'border-gray-300'} rounded-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500`}
               required
             />
             {errors.telefono && <p className="text-red-500 text-xs mt-1">{errors.telefono}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="direccion" className="block text-sm font-medium text-gray-300 mb-1">Dirección</label>
+            <label htmlFor="direccion" className="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
             <input
               type="text"
               id="direccion"
               name="direccion"
               value={formData.direccion}
               onChange={handleChange}
-              className={`mt-1 block w-full border ${errors.direccion ? 'border-red-500' : 'border-gray-600'} rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`mt-1 block w-full border ${errors.direccion ? 'border-red-500' : 'border-gray-300'} rounded-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500`}
               required
             />
             {errors.direccion && <p className="text-red-500 text-xs mt-1">{errors.direccion}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="dni" className="block text-sm font-medium text-gray-300 mb-1">DNI</label>
+            <label htmlFor="dni" className="block text-sm font-medium text-gray-700 mb-1">DNI</label>
             <input
               type="text"
               id="dni"
               name="dni"
               value={formData.dni}
               onChange={handleChange}
-              className={`mt-1 block w-full border ${errors.dni ? 'border-red-500' : 'border-gray-600'} rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`mt-1 block w-full border ${errors.dni ? 'border-red-500' : 'border-gray-300'} rounded-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500`}
               required
             />
             {errors.dni && <p className="text-red-500 text-xs mt-1">{errors.dni}</p>}
           </div>
           <div className="mb-6">
-            <label htmlFor="ruc" className="block text-sm font-medium text-gray-300 mb-1">RUC</label>
+            <label htmlFor="ruc" className="block text-sm font-medium text-gray-700 mb-1">RUC</label>
             <input
               type="text"
               id="ruc"
               name="ruc"
               value={formData.ruc}
               onChange={handleChange}
-              className={`mt-1 block w-full border ${errors.ruc ? 'border-red-500' : 'border-gray-600'} rounded-md p-2 bg-[#171821] text-white focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`mt-1 block w-full border ${errors.ruc ? 'border-red-500' : 'border-gray-300'} rounded-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500`}
               required
             />
             {errors.ruc && <p className="text-red-500 text-xs mt-1">{errors.ruc}</p>}
@@ -178,13 +178,13 @@ const AddClienteModal = ({ isOpen, onClose, onAddCliente }) => {
             <button
               type="button"
               onClick={handleClose}
-              className="bg-gradient-to-r from-gray-500 to-gray-700 hover:from-gray-600 hover:to-gray-800 text-white px-4 py-2 rounded-full transition-colors duration-150 ease-in-out shadow-md"
+              className="bg-gray-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-gray-700 transition-colors duration-150 ease-in-out"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white px-4 py-2 rounded-full transition-colors duration-150 ease-in-out shadow-md"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 transition-colors duration-150 ease-in-out"
             >
               Agregar
             </button>
