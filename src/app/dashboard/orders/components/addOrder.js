@@ -17,7 +17,7 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const { currencyFormatter } = useFormats();
   const [isReviewing, setIsReviewing] = useState(false);
-
+  console.log("productos add Order",products)
   const [formData, setFormData] = useState({
     id: "",
     fecha: "",
@@ -64,7 +64,7 @@ const OrderAddModal = ({ isOpen, onClose, onAddOrder }) => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:3010/producto/", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/producto/`, {
         headers: {
           Authorization: `Bearer ${session.user.token}`,
         },

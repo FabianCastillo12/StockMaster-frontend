@@ -25,7 +25,7 @@ export default function UserPage() {
   if (!isMounted) {
     return null;
   }
-
+  console.log("users from a",users);
   const stats = {
     totalUsers: users.length,
     activeUsers: users.filter((u) => u.active).length,
