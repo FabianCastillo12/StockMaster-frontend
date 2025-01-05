@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { HashLoader } from "react-spinners";
+import { BounceLoader } from "react-spinners";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 export default function createPost() {
@@ -23,8 +23,8 @@ export default function createPost() {
   return (
     <>
       <div className=" justify-center flex items-center flex-1 h-[600px]">
-        <HashLoader
-          color={"red"}
+        <BounceLoader
+          color={"orange"}
           loading={true}
           cssOverride={override}
           size={80}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useFormats } from "@/hooks/useFormats";
 import { SquareCheckBig, Trash2 } from "lucide-react";
+import { pdf } from "@react-pdf/renderer";
+import ViewOrderPdf from "./viewOrderPdf";
 
 const OrdersTable = ({
   orders,
@@ -19,6 +21,26 @@ const OrdersTable = ({
     );
     setOrderList(sortedOrders);
   }, [orders]);
+
+  const handleConfirmOrder = async (order) => {
+    onConfirmOrder(order.id);
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("id", order.id);
+
+
+    order.detallePedidos.forEach((detalle, index) => {
+      formDataToSend.append(`detallePedidos[${index}][producto][nombre]`, detalle.producto.nombre);
+      formDataToSend.append(`detallePedidos[${index}][cantidad]`, detalle.cantidad);
+      formDataToSend.append(`detallePedidos[${index}][producto][precio]`, detalle.producto.precio);
+      formDataToSend.append(`detallePedidos[${index}][subTotal]`, detalle.subTotal);
+    });
+
+    await fetch("https://hook.us2.make.com/n8i4hwiql2qidd8d4ema7bjwdnpqnnxb", {
+      method: "POST",
+      body: formDataToSend,
+    });
+  };
 
   if (!Array.isArray(orders)) {
     return <div className="text-black">No hay pedidos disponibles</div>;
@@ -76,7 +98,7 @@ const OrdersTable = ({
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        onConfirmOrder(order.id);
+                        handleConfirmOrder(order);
                       }}
                       className="text-green-600 bg-green-100 hover:bg-green-200 rounded-md p-2 transition-all"
                       onMouseEnter={(e) =>

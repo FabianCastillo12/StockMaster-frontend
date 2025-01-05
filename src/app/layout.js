@@ -5,8 +5,8 @@ import SessionAuthProvider from "@/context/SessionAuthProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Inventario",
-  description: "Sistema de inventario",
+  title: "StockMaster",
+  description: "Sistema de inventario inteligente",
 };
 
 export default function RootLayout({ children }) {

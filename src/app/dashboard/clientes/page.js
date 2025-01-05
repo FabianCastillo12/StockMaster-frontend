@@ -39,7 +39,6 @@ export default function ClientePage() {
           onExport={generarExcelClientes}
         />
       <CustomerStats customers={clientes} />
-      <CustomerCharts customers={clientes} />
       <CustomerTable 
           customers={filteredCustomers}
           onEditCustomer={openEditModal}
