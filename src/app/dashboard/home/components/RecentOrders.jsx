@@ -1,7 +1,4 @@
-import React from 'react';
-import { Eye } from 'lucide-react';
 import { usePedidos } from "@/hooks/usePedidos";
-
 
 export function RecentOrders() {
   const { pedidos } = usePedidos();

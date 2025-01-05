@@ -1,41 +1,47 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TrendingUp } from 'lucide-react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { usePedidos } from '@/hooks/usePedidos';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 export function TopProducts() {
-  const products = [
-    {
-      id: '1',
-      name: 'Laptop HP',
-      sales: 45,
-      revenue: 44999.55,
-      trend: '+12%',
-    },
-    {
-      id: '2',
-      name: 'Monitor Dell',
-      sales: 38,
-      revenue: 11399.62,
-      trend: '+8%',
-    },
-    {
-      id: '3',
-      name: 'Teclado Mecánico',
-      sales: 31,
-      revenue: 2789.69,
-      trend: '+5%',
-    },
-  ];
+  const { pedidos } = usePedidos();
+
+  const productsData = useMemo(() => {
+    const productMap = new Map();
+
+    pedidos.forEach((pedido) => {
+      pedido.detallePedidos.forEach((detalle) => {
+        const { producto, cantidad, subTotal } = detalle;
+        if (productMap.has(producto.id)) {
+          const existingProduct = productMap.get(producto.id);
+          existingProduct.sales += cantidad;
+          existingProduct.revenue += subTotal;
+        } else {
+          productMap.set(producto.id, {
+            id: producto.id,
+            name: producto.nombre,
+            sales: cantidad,
+            revenue: subTotal,
+          });
+        }
+      });
+    });
+
+    const productsArray = Array.from(productMap.values());
+    productsArray.sort((a, b) => b.sales - a.sales);
+
+    return productsArray.slice(0, 3);
+  }, [pedidos]);
 
   const chartData = {
-    labels: products.map(p => p.name),
+    labels: productsData.map(p => p.name),
     datasets: [
       {
         label: 'Ventas',
-        data: products.map(p => p.sales),
+        data: productsData.map(p => p.sales),
         backgroundColor: 'rgba(59, 130, 246, 0.8)',
         borderRadius: 4,
       },
@@ -78,17 +84,16 @@ export function TopProducts() {
           <Bar data={chartData} options={chartOptions} />
         </div>
         <div className="space-y-4">
-          {products.map((product) => (
+          {productsData.map((product) => (
             <div key={product.id} className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-900">{product.name}</p>
-                <p className="text-sm text-gray-600">{product.sales} ventas</p>
+                <p className="text-xs font-medium text-gray-900">{product.name}</p>
+                <p className="text-xs text-gray-600">{product.sales} ventas</p>
               </div>
               <div className="text-right">
-                <p className="text-sm font-medium text-gray-900">
-                  ${product.revenue.toLocaleString()}
+                <p className="text-xs font-medium text-gray-900">
+                  S/{product.revenue.toLocaleString()}
                 </p>
-                <p className="text-sm text-green-600">{product.trend}</p>
               </div>
             </div>
           ))}

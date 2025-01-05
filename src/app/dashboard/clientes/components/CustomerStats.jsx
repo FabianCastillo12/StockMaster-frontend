@@ -17,20 +17,6 @@ export default function CustomerStats({ customers }) {
       bgColor: 'bg-blue-100',
     },
     {
-      title: 'Clientes Activos',
-      value: customers.filter(c => c.status === 'active').length,
-      icon: UserCheck,
-      color: 'text-green-600',
-      bgColor: 'bg-green-100',
-    },
-    {
-      title: 'Clientes Inactivos',
-      value: customers.filter(c => c.status === 'inactive').length,
-      icon: UserX,
-      color: 'text-red-600',
-      bgColor: 'bg-red-100',
-    },
-    {
       title: 'Nuevos (30 días)',
       value: getRecentCustomers(),
       icon: Clock,

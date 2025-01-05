@@ -9,16 +9,10 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
     nombre: "",
     precio: "",
     cantidadStock: "",
-    unidad_medida: "",
     categoria: "",
-  });
-  const [unidadMedida, setUnidadMedida] = useState({
-    valor: "",
-    tipo: "ml"
   });
   const [errors, setErrors] = useState({});
   const user = useStore((state) => state.user);
-
 
   useEffect(() => {
     if (product) {
@@ -26,27 +20,14 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
         nombre: product.nombre || "",
         precio: product.precio || "",
         cantidadStock: product.cantidadStock || "",
-        unidad_medida: product.unidad_medida || "",
         categoria: product.categoria || "",
       });
-      const match = product.unidad_medida ? product.unidad_medida.match(/(\d+)(ml|L)/) : null;
-      if (match) {
-        setUnidadMedida({
-          valor: match[1],
-          tipo: match[2]
-        });
-      }
     } else {
       setFormData({
         nombre: "",
         precio: "",
         cantidadStock: "",
-        unidad_medida: "",
         categoria: ""
-      });
-      setUnidadMedida({
-        valor: "",
-        tipo: "ml"
       });
     }
   }, [product]);
@@ -54,28 +35,14 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
   const validateNombre = (nombre) => /^[a-zA-Z0-9\s\(\)mlpack]{1,50}$/.test(nombre);
   const validatePrecio = (precio) => /^\d+(\.\d{1,2})?$/.test(precio);
   const validateCantidadStock = (cantidadStock) => /^\d+$/.test(cantidadStock);
-  const validateUnidadMedida = (valor) => /^\d+$/.test(valor);
   const validateCategoria = (categoria) => categoria !== "";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "unidad_medida_valor" || name === "unidad_medida_tipo") {
-      setUnidadMedida(prev => ({
-        ...prev,
-        [name === "unidad_medida_valor" ? "valor" : "tipo"]: value
-      }));
-      if (name === "unidad_medida_valor") {
-        setErrors(prevErrors => ({
-          ...prevErrors,
-          unidad_medida: validateUnidadMedida(value) ? "" : "La unidad de medida debe ser un número entero.",
-        }));
-      }
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }));
-    }
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
 
     switch (name) {
       case "nombre":
@@ -114,7 +81,6 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
       nombre: validateNombre(formData.nombre) ? "" : "El nombre solo puede contener letras y espacios.",
       precio: validatePrecio(formData.precio) ? "" : "El precio debe ser un número válido con hasta dos decimales.",
       cantidadStock: validateCantidadStock(formData.cantidadStock) ? "" : "La cantidad en stock debe ser un número entero.",
-      unidad_medida: validateUnidadMedida(unidadMedida.valor) ? "" : "La unidad de medida debe ser un número entero.",
       categoria: validateCategoria(formData.categoria) ? "" : "Debe seleccionar una categoría.",
     };
 
@@ -136,7 +102,6 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
       ...formData,
       precio: parseFloat(formData.precio),
       cantidadStock: parseInt(formData.cantidadStock, 10),
-      unidad_medida: `${unidadMedida.valor}${unidadMedida.tipo}`,
       estado: "activo",
     };
 
@@ -145,12 +110,7 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
       nombre: "",
       precio: "",
       cantidadStock: "",
-      unidad_medida: "",
       categoria: ""
-    });
-    setUnidadMedida({
-      valor: "",
-      tipo: "ml"
     });
     handleClose();
   };
@@ -160,12 +120,7 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
       nombre: "",
       precio: "",
       cantidadStock: "",
-      unidad_medida: "",
       categoria: ""
-    });
-    setUnidadMedida({
-      valor: "",
-      tipo: "ml"
     });
     setErrors({});
     onClose();
@@ -219,30 +174,6 @@ const ProductAddModal = ({ productos, isOpen, onClose, onAddProduct, product, ca
               required
             />
             {errors.cantidadStock && <p className="text-red-500 text-sm">{errors.cantidadStock}</p>}
-          </div>
-          <div className="mb-4">
-            <label htmlFor="unidad_medida_valor" className="block text-gray-700 text-sm font-medium mb-2">Unidad de Medida</label>
-            <div className="flex">
-              <input
-                type="number"
-                name="unidad_medida_valor"
-                id="unidad_medida_valor"
-                value={unidadMedida.valor}
-                onChange={handleChange}
-                className="mt-1 block w-2/3 border border-gray-300 rounded-l-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                required
-              />
-              <select
-                name="unidad_medida_tipo"
-                value={unidadMedida.tipo}
-                onChange={handleChange}
-                className="mt-1 block w-1/3 border border-gray-300 rounded-r-md p-2 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              >
-                <option value="ml" title="Mililitros">ml</option>
-                <option value="L" title="Litros">L</option>
-              </select>
-            </div>
-            {errors.unidad_medida && <p className="text-red-500 text-sm">{errors.unidad_medida}</p>}
           </div>
           <div className="mb-4">
             <label htmlFor="categoria" className="block text-gray-700 text-sm font-medium mb-2">Categoría</label>

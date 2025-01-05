@@ -18,13 +18,6 @@ export function StatsCards({ totalProducts, activeProducts, inactiveProducts, ca
       bgColor: 'bg-green-100',
     },
     {
-      title: 'Productos inactivos',
-      value: inactiveProducts,
-      icon: XCircle,
-      color: 'text-red-600',
-      bgColor: 'bg-red-100',
-    },
-    {
       title: 'Categorías',
       value: categories,
       icon: Tags,
@@ -34,7 +27,7 @@ export function StatsCards({ totalProducts, activeProducts, inactiveProducts, ca
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-6">
       {stats.map((stat) => {
         const Icon = stat.icon;
         return (
