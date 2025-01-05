@@ -36,12 +36,12 @@ export function CustomerOverview() {
 
 
   const chartData = {
-    labels: ["Activos", "Inactivos"],
+    labels: ["Anteriores", "Este mes"],
     datasets: [
       {
         data: [
-          datosResumenCliente.clientesActivos,
-          datosResumenCliente.totalClientes - datosResumenCliente.clientesActivos,
+          datosResumenCliente.clientesActivos - datosResumenCliente.nuevosEsteMes,
+          datosResumenCliente.nuevosEsteMes,
         ],
         backgroundColor: ["rgb(34, 197, 94)", "rgb(239, 68, 68)"],
         borderWidth: 0,
@@ -80,21 +80,11 @@ export function CustomerOverview() {
             {datosResumenCliente.totalClientes}
           </p>
         </div>
-        <div>
-          <p className="text-sm text-gray-600">Clientes Activos</p>
-          <p className="text-2xl font-bold text-gray-900">
-            {datosResumenCliente.clientesActivos}
-          </p>
-        </div>
         <div className="border-r border-gray-200 pr-4">
           <p className="text-sm text-gray-600">Nuevos (Este Mes)</p>
           <p className="text-2xl font-bold text-green-600">
             +{datosResumenCliente.nuevosEsteMes}
           </p>
-        </div>
-        <div>
-          <p className="text-sm text-gray-600">Tasa de Abandono</p>
-          <p className="text-2xl font-bold text-red-600">{datosResumenCliente.tasaAbandono}</p>
         </div>
       </div>
 
