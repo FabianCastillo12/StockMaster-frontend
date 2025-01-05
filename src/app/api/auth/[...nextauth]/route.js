@@ -43,7 +43,7 @@ pages:{
     
 },
 session:{
-  maxAge:60*60*24 //hacer la prueba que se va a login cuando  pierde la session despues de un minuto
+  maxAge:60*60*24 
 },
 
 
