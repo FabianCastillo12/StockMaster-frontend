@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import ProductModal from "@/app/dashboard/products/components/editProduct";
+import ProductModal from "./editProduct";
 import { useSession } from "next-auth/react";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, Upload, Loader2, Check } from "lucide-react";
+import usePublishProduct from "./publishProduct";
 
 const ProductTable = ({
   products,
@@ -15,6 +16,7 @@ const ProductTable = ({
   const [productList, setProductList] = useState(products);
 
   const { data: session, status } = useSession();
+  const { publishProduct, getPublishingState, error } = usePublishProduct();
   useEffect(() => {
     setProductList(products);
   }, [products]);
@@ -98,6 +100,7 @@ const ProductTable = ({
                   <button
                     onClick={() => editProduct(true, product)}
                     className="text-blue-600 bg-blue-100 hover:bg-blue-200 rounded-md p-2 transition-all"
+                    disabled={getPublishingState(product.id).isPublishing}
                   >
                     <Pencil className="h-5 w-5" />
                   </button>
@@ -105,10 +108,30 @@ const ProductTable = ({
                     <button
                       onClick={() => onDeleteProduct(product.id)}
                       className="text-red-600 bg-red-100 hover:bg-red-200 rounded-md p-2 transition-all"
+                    disabled={getPublishingState(product.id).isPublishing}
                     >
                       <Trash2 className="h-5 w-5" />
                     </button>
                   )}
+                  <button
+                    onClick={async () => {
+                      try {
+                        await publishProduct(product);
+                      } catch (err) {
+                        alert(`Error al publicar: ${err.message}`);
+                      }
+                    }}
+                    className="text-green-600 bg-green-100 hover:bg-green-200 rounded-md p-2 transition-all flex items-center justify-center w-10 h-10"
+                    disabled={getPublishingState(product.id).isPublishing}
+                  >
+                    {getPublishingState(product.id).isPublishing ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : getPublishingState(product.id).isPublished ? (
+                      <Check className="h-5 w-5 text-green-600" />
+                    ) : (
+                      <Upload className="h-5 w-5" />
+                    )}
+                  </button>
                 </div>
               </td>
             </tr>
