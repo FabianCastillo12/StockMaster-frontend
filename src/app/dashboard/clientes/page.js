@@ -7,7 +7,6 @@ import UpdateClienteModal from "@/app/dashboard/clientes/components/updateClient
 import AddClienteModal from "@/app/dashboard/clientes/components/addCliente";
 import CustomerHeader from "@/app/dashboard/clientes/components/CustomerHeader";
 import CustomerStats from "@/app/dashboard/clientes/components/CustomerStats";
-import CustomerCharts from "@/app/dashboard/clientes/components/CustomerCharts";
 import CustomerTable from "@/app/dashboard/clientes/components/CustomerTable";
 
 export default function ClientePage() {
@@ -27,8 +26,8 @@ export default function ClientePage() {
   const { generarExcelClientes } = useReports();
   const [searchQuery, setSearchQuery] = useState('');
   const filteredCustomers = clientes.filter(customer => 
-    Object.values(customer).some(value => 
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    Object.entries(customer).some(([key, value]) => 
+      key !== 'id' && value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
 

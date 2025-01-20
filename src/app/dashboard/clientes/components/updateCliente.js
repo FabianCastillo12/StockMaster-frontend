@@ -87,6 +87,10 @@ export default function UpdateClienteModal({
       return;
     }
 
+    delete formData.updatedAt;
+    delete formData.createdAt;
+    delete formData.activo;
+    console.log("formData", formData);
     onUpdateCliente(formData);
     onClose();
   };

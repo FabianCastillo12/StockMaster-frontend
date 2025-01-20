@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { DollarSign, ShoppingBag, Users, Package } from "lucide-react";
 
-
 export function MetricCards({ ventas2años }) {
   const [ventasDelMes, setVentasDelMes] = useState(0);
-
   const [cambioPorcentaje, setCambioPorcentaje] = useState("N/A");
-  const [datosResumenCliente, setDatosResumenCliente] = useState([]);
-  const [datosResumenPedido, setDatosResumenPedido] = useState([]);
-  const [datosStockBajo, setDatosStockBajo] = useState([]);
+  const [datosResumenCliente, setDatosResumenCliente] = useState({});
+  const [datosResumenPedido, setDatosResumenPedido] = useState({});
+  const [datosStockBajo, setDatosStockBajo] = useState({});
+
   const stockBajo = async () => { 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/producto/low-stock/100`, {
-        headers: {
-        },
-
+        headers: {},
       });
       if (!res.ok) {
         console.error("Error fetching stock bajo:", res.statusText);
@@ -31,17 +28,14 @@ export function MetricCards({ ventas2años }) {
   const resumenProducto = async () => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/pedidos/nuevos/comparacion`, {
-        headers: {
-        },
+        headers: {},
       });
       if (!res.ok) {
         console.error("Error fetching resumen pedido:", res.statusText);
         return;
       }
       const data = await res.json();
-
       console.log("data", data);
-
       setDatosResumenPedido(data);
     } catch (error) {
       console.error("Error fetching resumen pedido:", error);
@@ -51,15 +45,12 @@ export function MetricCards({ ventas2años }) {
   const resumenCliente = async () => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/clientes/resumen`, {
-        headers: {
-        },
+        headers: {},
       });
-
       if (!res.ok) {
         console.error("Error fetching resumen cliente:", res.statusText);
         return;
       }
-
       const data = await res.json();
       console.log("data", data);  
       setDatosResumenCliente(data);
@@ -101,8 +92,8 @@ export function MetricCards({ ventas2años }) {
     },
     {
       title: "Pedidos Nuevos",
-      value: datosResumenPedido.pedidosMesActual,
-      change: `+${datosResumenPedido.porcentajeCambio}%`,
+      value: datosResumenPedido.pedidosMesActual || 0,
+      change: `+${(datosResumenPedido.porcentajeCambio || 0).toFixed(2)}%`,
       trend: "up",
       icon: ShoppingBag,
       color: "text-blue-600",
@@ -111,7 +102,7 @@ export function MetricCards({ ventas2años }) {
     {
       title: "Clientes Activos",
       value: datosResumenCliente.clientesActivos || 0,
-      change: `+${datosResumenCliente.porcentajeVsMesAnterior}%`,
+      change: `+${(datosResumenCliente.porcentajeVsMesAnterior || 0).toFixed(2)}%`,
       trend: "up",
       icon: Users,
       color: "text-purple-600",
@@ -119,7 +110,7 @@ export function MetricCards({ ventas2años }) {
     },
     {
       title: "Stock Bajo",
-      value: datosStockBajo.lowStockCount,
+      value: datosStockBajo.lowStockCount || 0,
       trend: "down",
       icon: Package,
       color: "text-red-600",

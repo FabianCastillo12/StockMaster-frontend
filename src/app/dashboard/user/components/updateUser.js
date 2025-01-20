@@ -81,7 +81,7 @@ export default function UpdateUserModal({ user, isOpen, onClose, onUpdateUser })
       setErrors(newErrors);
       return;
     }
-
+    delete formData.estado;
     onUpdateUser(formData);
     onClose();
   };

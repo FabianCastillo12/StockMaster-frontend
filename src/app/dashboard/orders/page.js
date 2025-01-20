@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { FileDown, ClipboardPlus } from "lucide-react";
+import Swal from "sweetalert2";
+import { FileDown, ClipboardPlus, FileText } from "lucide-react";
 import { usePedidos } from "@/hooks/usePedidos";
 import { useReports } from "@/hooks/useReports";
 import OrderAddModal from "@/app/dashboard/orders/components/addOrder";
@@ -9,7 +10,7 @@ import OrdersTable from "@/app/dashboard/orders/components/ordersTable";
 import ViewOrderModal from "@/app/dashboard/orders/components/viewOrder";
 
 export default function OrdersPage() {
-  const { pedidos, handleAddOrder, handleDeleteOrder, handleConfirmOrder } =
+  const { pedidos, fetchPedidos, handleAddOrder, handleDeleteOrder, handleConfirmOrder } =
     usePedidos();
   const { generarExcelPedidos } = useReports();
 
@@ -39,6 +40,40 @@ export default function OrdersPage() {
       onViewOrder={viewOrder}
     />
   );
+
+  const handleGenerateInvoice = async () => {
+    try {
+      const response = await fetch(
+        "https://hook.us2.make.com/f28q1x64rxn4mdwzruo5q8hl56kwfr7j",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ pedidosRegistrados }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al generar la factura");
+      }
+
+      const data = await response.json();
+      await Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Facturas generadas",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setTimeout(async () => {
+        await fetchPedidos();
+      }, 3000);
+      console.log("Factura generada:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <>
@@ -72,13 +107,22 @@ export default function OrdersPage() {
               Pedidos Entregados
             </button>
           </div>
-          <button
-            onClick={generarExcelPedidos}
-            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-          >
-            <FileDown className="h-5 w-5" />
-            <span className="hidden sm:inline">Exportar</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={generarExcelPedidos}
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            >
+              <FileDown className="h-5 w-5" />
+              <span className="hidden sm:inline">Exportar</span>
+            </button>
+            <button
+              onClick={handleGenerateInvoice}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <FileText className="h-5 w-5" />
+              <span className="hidden sm:inline">Generar Facturas</span>
+            </button>
+          </div>
         </div>
         <div
           className={`transition-opacity duration-500 ease-in-out transform ${

@@ -2,6 +2,9 @@ import React from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
 
 export default function CustomerTable({ customers, onEditCustomer, onDeleteCustomer }) {
+  // Ordenar los clientes por orden de creación, más recientes primero
+  const sortedCustomers = [...customers].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
       <table className="min-w-full divide-y divide-gray-300">
@@ -25,7 +28,7 @@ export default function CustomerTable({ customers, onEditCustomer, onDeleteCusto
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {customers.map((customer) => (
+          {sortedCustomers.map((customer) => (
             <tr
               key={customer.id}
               className="hover:bg-gray-100 transition-colors duration-200 ease-in-out"

@@ -43,7 +43,7 @@ export function CustomerOverview() {
           datosResumenCliente.clientesActivos - datosResumenCliente.nuevosEsteMes,
           datosResumenCliente.nuevosEsteMes,
         ],
-        backgroundColor: ["rgb(34, 197, 94)", "rgb(239, 68, 68)"],
+        backgroundColor: ["rgb(255, 165, 0)", "rgb(34, 197, 94)"],
         borderWidth: 0,
       },
     ],

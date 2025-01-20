@@ -179,6 +179,7 @@ export function usePedidos() {
 
   return {
     pedidos,
+    fetchPedidos,
     handleAddOrder,
     handleDeleteOrder,
     handleConfirmOrder

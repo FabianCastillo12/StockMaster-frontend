@@ -1,8 +1,7 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 
 export const productStores = create((set) => ({
-  productPage:[],
+  productPage: [],
   mostrarProduct: (data) => set({ productPage: data })
-
-}))
+}));
 

@@ -87,8 +87,8 @@ export function TopProducts() {
           {productsData.map((product) => (
             <div key={product.id} className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-900">{product.name}</p>
-                <p className="text-xs text-gray-600">{product.sales} ventas</p>
+                <p className="text-s font-medium text-gray-900">{product.name}</p>
+                <p className="text-s text-gray-600">{product.sales} ventas</p>
               </div>
               <div className="text-right">
                 <p className="text-xs font-medium text-gray-900">
