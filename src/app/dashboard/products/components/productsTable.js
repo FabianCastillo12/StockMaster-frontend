@@ -104,15 +104,13 @@ const ProductTable = ({
                   >
                     <Pencil className="h-5 w-5" />
                   </button>
-                  {session.user.rol === "admin" && (
-                    <button
+                  <button
                       onClick={() => onDeleteProduct(product.id)}
                       className="text-red-600 bg-red-100 hover:bg-red-200 rounded-md p-2 transition-all"
                     disabled={getPublishingState(product.id).isPublishing}
                     >
                       <Trash2 className="h-5 w-5" />
                     </button>
-                  )}
                   <button
                     onClick={async () => {
                       try {

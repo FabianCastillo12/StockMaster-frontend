@@ -105,6 +105,7 @@ export function useReports() {
   };
 
   const generarExcelStock = async () => {
+    console.log("Generando excel de stock");
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reportes-doc/inventario`, {
         method: "GET",

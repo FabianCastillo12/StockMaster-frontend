@@ -129,7 +129,7 @@ export function useProducts() {
     );
     const result = await Swal.fire({
       title: "¿Estás seguro?",
-      text: `Se eliminará el producto ${productToDelete.name}. Esta acción no se puede deshacer.`,
+      text: `Se eliminará el producto ${productToDelete.nombre}. Esta acción no se puede deshacer.`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

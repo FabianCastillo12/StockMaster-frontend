@@ -50,7 +50,7 @@ export default function ProductsPage() {
   return (
     <>
       <div className="">
-        <Header onAddProduct={generarExcelStock} onSearch={handleSearch} />
+        <Header onExport={generarExcelStock} onSearch={handleSearch} />
         <StatsCards {...stats} />
         <div>
           <ProductTable
